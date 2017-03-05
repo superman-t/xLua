@@ -1,16 +1,22 @@
 ![](Assets/XLua/Doc/xLua.png)
 
-![](https://img.shields.io/badge/release-v2.1.5-blue.png)
+[![license](https://img.shields.io/badge/license-MIT-blue.png)](https://github.com/Tencent/xLua/blob/master/LICENSE.TXT)
+[![release](https://img.shields.io/badge/release-v2.1.6-blue.png)](https://github.com/Tencent/xLua/releases)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-blue.png)](https://github.com/Tencent/xLua/pulls)
 
-## Unity3D下Lua编程支持
+## Unity下Lua编程支持
 
-xLua为Unity3D增加Lua脚本编程的能力，进而提供代码逻辑增量更新的可能。当然不仅仅如此，在coco2dx上的实践告诉我们，以Lua为主打语言的游戏客户端编程是可行的。
+xLua为Unity增加Lua脚本编程的能力，进而提供代码逻辑增量更新的可能。当然不仅仅如此，在coco2dx上的实践告诉我们，以Lua为主打语言的游戏客户端编程是可行的。
+
+## C#下Lua编程支持
+
+xLua也支持非Unity下的C#环境使用，通用版本的介绍请看[这里](General/)。
 
 ## xLua的突破
 
 xLua在功能、性能、易用性都有不少突破，这几方面分别最具代表性的是：
 
-* Unity3D全平台热补丁技术，可以运行时把C#实现（方法，操作符，属性，事件，构造函数，析构函数，支持泛化）替换成lua实现；
+* Unity全平台热补丁技术，可以运行时把C#实现（方法，操作符，属性，事件，构造函数，析构函数，支持泛化）替换成lua实现；
 * 自定义struct，枚举在Lua和C#间传递无C# gc alloc；
 * 编辑器下无需生成代码，开发更轻量；
 
@@ -18,9 +24,19 @@ xLua在功能、性能、易用性都有不少突破，这几方面分别最具�
 
 ## 安装
 
-直接解压到Assets下可用。第一次使用建议把例子包也安装，运行看看效果。
+直接解压工程下可用。第一次使用建议把例子包也安装，运行看看效果。
 
 如果希望安装到其它目录，请看[FAQ](Assets/XLua/Doc/faq.md)相关介绍。
+
+## lua5.3 vs luajit
+
+xLua有两个版本，分别集成了lua5.3和luajit，一个项目只能选择其一。这两个版本C#代码是一样的，不同的是Plugins部分。
+
+lua5.3的特性更丰富些，比如支持原生64位整数，支持苹果bitcode，支持utf8等。出现问题因为是纯c代码，也好定位。比起luajit，lua对安装包的影响也更小。
+
+而luajit胜在性能，如果其jit不出问题的话，可以比lua高一个数量级。目前luajit作者不打算维护luajit，在找人接替其维护，后续发展不太明朗。
+
+项目可以根据自己情况判断哪个更适合。因为目前lua53版本使用较多，所以xLua工程Plugins目录下默认配套是lua53版本。
 
 ## 快速入门
 
@@ -29,7 +45,7 @@ xLua在功能、性能、易用性都有不少突破，这几方面分别最具�
 下载xLua后解压到Unity工程Assets目录下，建一个MonoBehaviour拖到场景，在Start加入如下代码：
 
 ```csharp
-Lua.LuaEnv luaenv = new XLua.LuaEnv();
+XLua.LuaEnv luaenv = new XLua.LuaEnv();
 luaenv.DoString("CS.UnityEngine.Debug.Log('hello world')");
 luaenv.Dispose();
 ```
@@ -81,12 +97,19 @@ xLua支持热补丁，这意味着你可以：
 * [06_Coroutine](Assets/XLua/Examples/06_Coroutine/): 展示lua协程怎么和Unity协程相配合。
 * [07_AsyncTest](Assets/XLua/Examples/07_AsyncTest/): 展示怎么用lua协程来把异步逻辑同步化。
 * [08_Hotfix](Assets/XLua/Examples/08_Hotfix/): 热补丁的示例（需要开启热补丁特性，如何开启请看[指南](Assets/XLua/Doc/hotfix.md)）。
+* [09_GenericMethod](Assets/XLua/Examples/09_GenericMethod/): 泛化函数支持的演示。
  
 ## 文档
 
-* [XLua介绍.ppt](Assets/XLua/Doc/XLua介绍.ppt)：总体介绍文档。
 * [XLua教程.doc](Assets/XLua/Doc/XLua教程.doc)：教程，其配套代码[这里](Assets/XLua/Tutorial/)。
 * [XLua的配置.doc](Assets/XLua/Doc/XLua的配置.doc)：介绍如何配置xLua。
 * [XLua增加删除第三方lua库.doc](Assets/XLua/Doc/XLua增加删除第三方lua库.doc)：如何增删第三方lua扩展库。
 * [XLua API.doc](Assets/XLua/Doc/XLua_API.doc)：API文档。
+* [生成引擎二次开发指南](Assets/XLua/Doc/custom_generate.md)：介绍如何做生成引擎的二次开发。
+* [Hotfix操作指南](Assets/XLua/Doc/hotfix.md)：介绍如何使用hotfix特性。
+
+## 技术支持
+
+QQ群：612705778
+
 
